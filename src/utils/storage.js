@@ -1,3 +1,5 @@
+import store from "../store";
+
 //存缓存的方法
 //传入两个参数：1、键 2、值
 export const setItem = (key, value) => {
@@ -34,4 +36,5 @@ export const getItem = (key) => {
 //解决：退出登录时需要清空缓存
 export const removeItem = () => {
   localStorage.clear();
+  store.commit("setToken", null);
 };

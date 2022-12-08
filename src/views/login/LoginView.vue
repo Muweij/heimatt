@@ -40,13 +40,13 @@
 </template>
 <script>
 import { loginApi } from "@/api/login";
-import { setItem } from "@/utils/storage";
+// import { setItem } from "@/utils/storage";
 export default {
   data() {
     return {
       user: {
-        mobile: "",
-        code: "",
+        mobile: "18678884464",
+        code: "246810",
       },
       userValidatorPhone: [
         { required: true, message: "请填写用户名" },
@@ -78,15 +78,26 @@ export default {
         let { data } = await loginApi(this.user);
         // console.log(data.data.token);
         // localStorage.setItem(键, 值);
-        setItem("token", data.data.token);
+        this.$store.commit("setToken", data.data.token);
         // setItem（键，值）
         this.$toast.success("登录成功");
+        //登录成功后返回到上一级页面
+        // back()回退
+        this.$router.back();
       } catch (error) {
         // error包含接口返回的错误信息
         console.log(error);
         //登录失败的原因给用户提示出来
         this.$toast.fail(error.response.data.message);
       }
+      // loginApi(this.user)
+      //   .then(() => {
+      //     //正确的代码
+      //   })
+      //   .catch(() => {
+      //     //接口请求失败的代码
+      //   });
+      //async和await：node第9天的课程
     },
   },
 };
