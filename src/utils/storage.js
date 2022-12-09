@@ -3,6 +3,7 @@ import store from "../store";
 //存缓存的方法
 //传入两个参数：1、键 2、值
 export const setItem = (key, value) => {
+  console.log(typeof value);
   //思考：存一个简单数据没问题，那要存一个数组或对象，可以吗？
   if (typeof value == "object") {
     localStorage.setItem(key, JSON.stringify(value));
