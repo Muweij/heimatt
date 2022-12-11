@@ -13,32 +13,54 @@
     </van-nav-bar>
     <!--------------->
     <!-- 导航栏和他的列表 -->
-    <van-tabs class="channels">
+    <van-tabs class="channels" v-model="active">
       <van-tab v-for="item in channels" :title="item.name" :key="item.id">
         <!-- 列表 -->
         <ArtList :channelsItem="item" />
         <!-- -- -->
       </van-tab>
       <!-- 汉堡按钮 -->
-      <div class="hamburgerbtn">
+      <div class="hamburgerbtn" @click="hamburgerFn">
         <span class="toutiao toutiao-gengduo"></span>
       </div>
       <!-- ------- -->
     </van-tabs>
+    <van-popup v-model="show" position="bottom" :style="{ height: '100%' }">
+      <channelEdit
+        @close="show = false"
+        :channels="channels"
+        :channelActive="active"
+        @ischannel="ischannel"
+      ></channelEdit>
+    </van-popup>
     <!-- -------------- -->
   </div>
 </template>
 <script>
   import { loginApi } from '@/api/home'
   import ArtList from './component/artList.vue'
+  import channelEdit from '@/components/channelEdit.vue'
   export default {
-    components: { ArtList },
+    components: {
+      ArtList,
+      channelEdit
+    },
     data() {
       return {
-        channels: []
+        channels: [],
+        show: false,
+        active: 0
       }
     },
-    methods: {},
+    methods: {
+      hamburgerFn() {
+        this.show = true
+      },
+      ischannel(index, bool) {
+        this.active = index
+        this.show = bool
+      }
+    },
     async created() {
       try {
         let { data } = await loginApi()

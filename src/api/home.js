@@ -12,3 +12,8 @@ export const artListApi = params =>
     method: 'get',
     params
   })
+export const allChannelApi = () =>
+  request({
+    url: '/v1_0/channels',
+    method: 'get'
+  })

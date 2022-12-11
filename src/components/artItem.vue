@@ -19,8 +19,8 @@
       <div class="tip">
         <span>{{ item.is_top ? '置顶' : '未置顶' }}</span>
         <span>{{ item.aut_name }}</span>
-        <span>{{ item.comm_count }}</span>
-        <span>{{ item.pubdate }}</span>
+        <span>{{ item.comm_count }}评论</span>
+        <span>{{ item.pubdate | datatime }}</span>
       </div>
     </div>
   </div>
