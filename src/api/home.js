@@ -17,3 +17,25 @@ export const allChannelApi = () =>
     url: '/v1_0/channels',
     method: 'get'
   })
+export const setChannelApi = channels =>
+  request({
+    url: '/v1_0/user/channels',
+    method: 'put',
+    data: {
+      channels
+    }
+  })
+export const searchSuggestionApi = val =>
+  request({
+    url: '/v1_0/suggestion',
+    method: 'get',
+    params: {
+      q: val
+    }
+  })
+export const searchResultApi = params =>
+  request({
+    url: '/v1_0/search',
+    method: 'get',
+    params
+  })

@@ -3,7 +3,7 @@
     <!-- 搜索按钮 -->
     <van-nav-bar class="page-nav-bar" title="搜索">
       <template #title>
-        <van-button class="seachbtn" type="info">
+        <van-button class="seachbtn" type="info" to="/search">
           <template #icon>
             <i class="toutiao toutiao-sousuo"></i>
           </template>
@@ -38,6 +38,7 @@
 </template>
 <script>
   import { loginApi } from '@/api/home'
+  import { getItem } from '@/utils/storage'
   import ArtList from './component/artList.vue'
   import channelEdit from '@/components/channelEdit.vue'
   export default {
@@ -63,8 +64,18 @@
     },
     async created() {
       try {
-        let { data } = await loginApi()
-        this.channels = data.data.channels
+        if (this.$store.state.token) {
+          let { data } = await loginApi()
+          this.channels = data.data.channels
+        } else {
+          let storageChannelList = getItem('MYCHANNEL')
+          if (storageChannelList) {
+            this.channels = storageChannelList
+          } else {
+            let { data } = await loginApi()
+            this.channels = data.data.channels
+          }
+        }
       } catch (error) {
         // console.log(error)
       }

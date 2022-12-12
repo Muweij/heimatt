@@ -6,13 +6,7 @@
     <!-- 我的频道 -->
     <div class="mycha">
       <div>我的频道</div>
-      <van-button
-        class="editbtn"
-        plain
-        type="danger"
-        round
-        @click="isEdit = !isEdit"
-      >
+      <van-button class="editbtn" plain type="danger" round @click="isEdit = !isEdit">
         {{ isEdit ? '完成' : '编辑' }}
       </van-button>
     </div>
@@ -47,7 +41,9 @@
   </div>
 </template>
 <script>
-  import { allChannelApi } from '@/api/home'
+  import { allChannelApi, setChannelApi } from '@/api/home'
+  import { setItem } from '@/utils/storage'
+
   export default {
     props: {
       channels: Array,
@@ -91,6 +87,25 @@
       },
       addchannelFn(item) {
         this.channels.push(item)
+      }
+    },
+    watch: {
+      channels: {
+        deep: true,
+        handler(newVal) {
+          if (this.$store.state.token) {
+            let arr = []
+            for (let i = 0; i < newVal.length; i++) {
+              let obj = {}
+              obj.id = newVal[i].id
+              obj.seq = i
+              arr.push(obj)
+            }
+            setChannelApi(arr)
+          } else {
+            setItem('MYCHANNEL', newVal)
+          }
+        }
       }
     }
   }
