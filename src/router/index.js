@@ -40,6 +40,12 @@ const routes = [
     path: '/search',
     //路由懒加载
     component: () => import('@/views/search/SearchView')
+  },
+  {
+    path: '/article/:articleId',
+    //路由懒加载
+    component: () => import('@/views/article/ArticleView'),
+    props: true
   }
 ]
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 无封面的 -->
-    <div class="itemone">
+    <div class="itemone" @click="goArticle">
       <div class="itemthree">
         <!-- 单图的时候标题宽度为447 -->
         <div class="title" :class="{ wd447: item.cover.type == 1 }">
@@ -33,7 +33,11 @@
     props: {
       item: Object
     },
-    methods: {}
+    methods: {
+      goArticle() {
+        this.$router.push({ path: `/article/${this.item.art_id}` })
+      }
+    }
   }
 </script>
 <style scoped lang="less">

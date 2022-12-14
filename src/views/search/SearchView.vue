@@ -13,7 +13,12 @@
     </van-search>
     <search-result-vue v-if="searchReaultShow" :searchvalue="searchvalue" />
     <search-suggestion-vue v-else-if="searchvalue" :searchvalue="searchvalue" @keywordFn="keywordFn" />
-    <search-history-vue v-else :searchHistoryList="searchHistoryList" />
+    <search-history-vue
+      v-else
+      :searchHistoryList="searchHistoryList"
+      @deleteAll="searchHistoryList = []"
+      @openResult="keywordFn"
+    />
   </div>
 </template>
 
@@ -49,6 +54,10 @@
 
         this.searchReaultShow = true
       }
+      // openResult(item) {
+      //   this.searchReaultShow = true
+      //   this.searchvalue = item
+      // }
     },
     watch: {
       searchHistoryList: {
